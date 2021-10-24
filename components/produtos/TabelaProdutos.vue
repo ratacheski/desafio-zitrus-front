@@ -13,16 +13,16 @@
       <span>{{ item.valorFornecedor | currency }}</span>
     </template>
     <template #[`item.acoes`]="{ item }">
-      <v-icon small class="mr-2" color="info" @click="registrarSaida(item)">
+      <v-icon class="mr-2" color="info" @click="registrarSaida(item)">
         mdi-package-up
       </v-icon>
-      <v-icon small class="mr-2" color="info" @click="registrarEntrada(item)">
+      <v-icon class="mr-2" color="info" @click="registrarEntrada(item)">
         mdi-package-down
       </v-icon>
-      <v-icon small class="mr-2" color="secondary" @click="editar(item)">
+      <v-icon class="mr-2" color="secondary" @click="editar(item)">
         mdi-pencil
       </v-icon>
-      <v-icon small color="error" @click="excluir(item)"> mdi-delete </v-icon>
+      <v-icon color="error" @click="excluir(item)"> mdi-delete </v-icon>
     </template>
   </v-data-table>
 </template>
