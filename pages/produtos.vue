@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row class='mt-6'>
     <v-col class="text-center">
       <TabelaProdutos :produtos='produtos'/>
     </v-col>

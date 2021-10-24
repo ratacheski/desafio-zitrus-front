@@ -3,6 +3,10 @@
     <template #top>
       <v-toolbar flat>
         <v-toolbar-title>Produtos</v-toolbar-title>
+        <v-spacer/>
+        <v-btn fab absolute top right color="primary" @click='criar(item)'>
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </v-toolbar>
     </template>
     <template #[`item.valorFornecedor`]="{ item }">
@@ -70,6 +74,9 @@ export default {
     },
     registrarEntrada(item) {
       // TODO - abrir dialog de movimentação de estoque de saída
+    },
+    criar(item) {
+      // TODO - direcionar para tela de criação de produto
     },
     editar(item) {
       // TODO - direcionar para tela de edição de produto
