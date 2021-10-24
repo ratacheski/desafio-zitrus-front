@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar fixed app dark color="secondary">
+  <v-app-bar clipped-left app dark color="secondary">
     <v-app-bar-nav-icon @click.stop="$emit('toggleDrawer')" />
     <v-btn icon @click.stop="$emit('toggleMiniVariant')">
       <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>

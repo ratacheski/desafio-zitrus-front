@@ -2,7 +2,7 @@
   <v-navigation-drawer
     :value='drawer'
     :mini-variant='miniVariant'
-    fixed
+    clipped
     app
     @input="emitToggleDrawer"
   >
@@ -47,7 +47,7 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-pencil',
+          icon: 'mdi-package-variant',
           title: 'Produtos',
           to: '/produtos'
         }
