@@ -1,4 +1,4 @@
-import colors from 'vuetify/es5/util/colors'
+import pt from 'vuetify/src/locale/pt'
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -28,6 +28,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    {src: '~/plugins/currency.js'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -48,12 +49,32 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8080'
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
+      themes: {
+        light: {
+          primary: '#97D700',
+          secondary: '#0FC378',
+          accent: '#DFF394',
+          footer: '#1A1A32'
+        }
+      }
+    },
+    lang:{
+      locales: {pt},
+      current: 'pt'
+    },
+    treeShake: true,
+    defaultAssets: {
+      font: {
+        family: 'Sora'
+      }
     }
   },
 
