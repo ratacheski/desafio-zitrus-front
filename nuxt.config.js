@@ -62,6 +62,7 @@ export default {
           primary: '#97D700',
           secondary: '#0FC378',
           accent: '#DFF394',
+          info: '#1A1A32',
           footer: '#1A1A32'
         }
       }

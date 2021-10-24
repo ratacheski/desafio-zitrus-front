@@ -5,15 +5,20 @@
         <v-toolbar-title>Produtos</v-toolbar-title>
       </v-toolbar>
     </template>
-    <template #[`item.actions`]="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-    </template>
     <template #[`item.valorFornecedor`]="{ item }">
-      <span>{{item.valorFornecedor | currency}}</span>
+      <span>{{ item.valorFornecedor | currency }}</span>
     </template>
-    <template #no-data>
-      <v-btn color="primary" @click="initialize"> Reset </v-btn>
+    <template #[`item.acoes`]="{ item }">
+      <v-icon small class="mr-2" color="info" @click="registrarSaida(item)">
+        mdi-package-up
+      </v-icon>
+      <v-icon small class="mr-2" color="info" @click="registrarEntrada(item)">
+        mdi-package-down
+      </v-icon>
+      <v-icon small class="mr-2" color="secondary" @click="editar(item)">
+        mdi-pencil
+      </v-icon>
+      <v-icon small color="error" @click="excluir(item)"> mdi-delete </v-icon>
     </template>
   </v-data-table>
 </template>
@@ -50,8 +55,28 @@ export default {
           align: 'right',
           value: 'quantidadeEstoque',
         },
+        {
+          text: 'Ações',
+          value: 'acoes',
+          align: 'right',
+          sortable: false,
+        },
       ],
     }
+  },
+  methods: {
+    registrarSaida(item) {
+      // TODO - abrir dialog de movimentação de estoque de saída
+    },
+    registrarEntrada(item) {
+      // TODO - abrir dialog de movimentação de estoque de saída
+    },
+    editar(item) {
+      // TODO - direcionar para tela de edição de produto
+    },
+    excluir(item) {
+      // TODO - abrir dialog de exclusão de produto
+    },
   },
 }
 </script>
