@@ -4,7 +4,7 @@
       <v-toolbar flat>
         <v-toolbar-title>Produtos</v-toolbar-title>
         <v-spacer/>
-        <v-btn fab absolute top right color="primary" @click='criar(item)'>
+        <v-btn fab absolute top right color="primary" @click='criar'>
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-toolbar>
@@ -75,11 +75,11 @@ export default {
     registrarEntrada(item) {
       // TODO - abrir dialog de movimentação de estoque de saída
     },
-    criar(item) {
-      // TODO - direcionar para tela de criação de produto
+    criar() {
+      this.$router.push("/produtos/novo")
     },
     editar(item) {
-      // TODO - direcionar para tela de edição de produto
+      this.$router.push(`/produtos/${item.codigo}`)
     },
     excluir(item) {
       // TODO - abrir dialog de exclusão de produto
