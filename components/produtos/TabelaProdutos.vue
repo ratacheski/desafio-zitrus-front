@@ -1,43 +1,63 @@
 <template>
-  <v-data-table :headers="headers" :items="produtos" class="elevation-1">
-    <template #top>
-      <v-toolbar flat>
-        <v-toolbar-title>Produtos</v-toolbar-title>
-        <v-spacer/>
-        <v-btn fab absolute top right color="primary" @click='criar'>
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </template>
-    <template #[`item.valorFornecedor`]="{ item }">
-      <span>{{ item.valorFornecedor | currency }}</span>
-    </template>
-    <template #[`item.acoes`]="{ item }">
-      <v-icon class="mr-2" color="info" @click="registrarSaida(item)">
-        mdi-package-up
-      </v-icon>
-      <v-icon class="mr-2" color="info" @click="registrarEntrada(item)">
-        mdi-package-down
-      </v-icon>
-      <v-icon class="mr-2" color="secondary" @click="editar(item)">
-        mdi-pencil
-      </v-icon>
-      <v-icon color="error" @click="excluir(item)"> mdi-delete </v-icon>
-    </template>
-  </v-data-table>
+  <div>
+    <v-data-table :headers="headers" :items="produtos" class="elevation-1">
+      <template #top>
+        <v-toolbar flat>
+          <v-toolbar-title>Produtos</v-toolbar-title>
+          <v-spacer />
+          <v-btn fab absolute top right color="primary" @click="criar">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-toolbar>
+      </template>
+      <template #[`item.valorFornecedor`]="{ item }">
+        <span>{{ item.valorFornecedor | currency }}</span>
+      </template>
+      <template #[`item.acoes`]="{ item }">
+        <v-icon class="mr-2" color="info" @click="registrarSaida(item)">
+          mdi-package-up
+        </v-icon>
+        <v-icon class="mr-2" color="info" @click="registrarEntrada(item)">
+          mdi-package-down
+        </v-icon>
+        <v-icon class="mr-2" color="secondary" @click="editar(item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon color="error" @click="excluir(item)"> mdi-delete </v-icon>
+      </template>
+    </v-data-table>
+    <DialogDeleteProduto
+      :exibir="exibirDialogExclusao"
+      :produto="produtoParaExcluir"
+      @closeDialog="exibirDialogExclusao = false"
+      @produtoExcluido="handleProdutoExcluido"
+    />
+    <DialogEntradaProduto
+      :exibir="exibirDialogEntradaProduto"
+      :produto="produtoParaMovimentar"
+      @closeDialog="exibirDialogEntradaProduto = false"
+      @movimentacaoFinalizada="handleMovimentacaoFinalizada"
+    />
+  </div>
 </template>
 
 <script>
+import DialogDeleteProduto from '~/components/produtos/DialogDeleteProduto'
+import DialogEntradaProduto from '~/components/produtos/DialogEntradaProduto'
 export default {
   name: 'TabelaProdutos',
-  props: {
-    produtos: {
-      type: Array,
-      default: () => [],
-    },
+  components: { DialogEntradaProduto, DialogDeleteProduto },
+  async fetch() {
+    await this.obterProdutos()
   },
   data() {
     return {
+      produtos: [],
+      exibirDialogExclusao: false,
+      exibirDialogEntradaProduto: false,
+      exibirDialogSaidaProduto: false,
+      produtoParaExcluir: {},
+      produtoParaMovimentar: {},
       headers: [
         {
           text: 'Descrição',
@@ -70,19 +90,35 @@ export default {
   },
   methods: {
     registrarSaida(item) {
-      // TODO - abrir dialog de movimentação de estoque de saída
+      this.produtoParaMovimentar = item
+      this.exibirDialogSaidaProduto = true
     },
     registrarEntrada(item) {
-      // TODO - abrir dialog de movimentação de estoque de saída
+      this.produtoParaMovimentar = item
+      this.exibirDialogEntradaProduto = true
     },
     criar() {
-      this.$router.push("/produtos/novo")
+      this.$router.push('/produtos/novo')
     },
     editar(item) {
       this.$router.push(`/produtos/${item.codigo}`)
     },
     excluir(item) {
-      // TODO - abrir dialog de exclusão de produto
+      this.produtoParaExcluir = item
+      this.exibirDialogExclusao = true
+    },
+    handleProdutoExcluido() {
+      this.produtoParaExcluir = {}
+      this.exibirDialogExclusao = false
+      this.obterProdutos()
+    },
+    handleMovimentacaoFinalizada() {
+      this.produtoParaMovimentar = {}
+      this.exibirDialogEntradaProduto = false
+      this.obterProdutos()
+    },
+    async obterProdutos() {
+      this.produtos = await this.$axios.$get('/produtos')
     },
   },
 }

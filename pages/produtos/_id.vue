@@ -51,9 +51,7 @@
                   type='number'
                 ></v-text-field>
               </v-col>
-
             </v-row>
-
           </v-form>
         </v-card-text>
       </v-card>
