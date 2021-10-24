@@ -33,6 +33,7 @@
       @produtoExcluido="handleProdutoExcluido"
     />
     <DialogEntradaProduto
+      v-if='exibirDialogEntradaProduto'
       :exibir="exibirDialogEntradaProduto"
       :produto="produtoParaMovimentar"
       @closeDialog="exibirDialogEntradaProduto = false"
