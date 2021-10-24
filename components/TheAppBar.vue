@@ -1,16 +1,10 @@
 <template>
-  <v-app-bar
-    fixed
-    app
-  >
+  <v-app-bar fixed app dark color="secondary">
     <v-app-bar-nav-icon @click.stop="$emit('toggleDrawer')" />
-    <v-btn
-      icon
-      @click.stop="$emit('toggleMiniVariant')"
-    >
+    <v-btn icon @click.stop="$emit('toggleMiniVariant')">
       <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
     </v-btn>
-    <v-toolbar-title v-text="title" />
+    <v-toolbar-title class="font-weight-bold" v-text="title" />
   </v-app-bar>
 </template>
 
@@ -20,17 +14,15 @@ export default {
   props: {
     miniVariant: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      title: 'Vuetify.js'
+      title: 'Controle de Estoque Zitrus',
     }
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
