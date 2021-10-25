@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <TheSnackbar/>
     <TheSideBar :mini-variant='miniVariant'
                 :drawer='drawer'
                 @toggleDrawer='handleToggleDrawer' />
@@ -21,9 +22,10 @@
 import TheSideBar from '~/components/TheSideBar'
 import TheAppBar from '~/components/TheAppBar'
 import TheFooter from '~/components/TheFooter'
+import TheSnackbar from '~/components/TheSnackbar'
 
 export default {
-  components: { TheSideBar, TheFooter, TheAppBar },
+  components: { TheSnackbar, TheSideBar, TheFooter, TheAppBar },
   data() {
     return {
       drawer: false,
