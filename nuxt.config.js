@@ -58,7 +58,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://107.20.127.241:8080'
+    baseURL: 'https://cors-everywhere.herokuapp.com/http://107.20.127.241:8080'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
