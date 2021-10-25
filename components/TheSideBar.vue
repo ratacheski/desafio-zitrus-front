@@ -50,6 +50,11 @@ export default {
           icon: 'mdi-package-variant',
           title: 'Produtos',
           to: '/produtos'
+        },
+        {
+          icon: 'mdi-cash',
+          title: 'Relatório de Venda',
+          to: '/relatorio-venda'
         }
       ],
     }
