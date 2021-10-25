@@ -1,7 +1,7 @@
 <template>
   <v-dialog :value='exibir' max-width='500px' @input="closeDialog">
     <v-card>
-      <v-card-title class='text-h5'>Movimento de Entrada</v-card-title>
+      <v-card-title class='text-h5'>Movimento de Saída</v-card-title>
       <v-card-text class='mt-8'>
         <v-row>
           <v-col cols='12' md='6'>
@@ -20,7 +20,7 @@
                   <v-text-field
                     v-model.number="quantidade"
                     :rules='rules.quantidade'
-                    label='Quantidade Recebida'
+                    label='Qtd. para Vender'
                     type="number"
                   ></v-text-field>
                 </v-col>
@@ -29,7 +29,7 @@
                     v-model.number="valor"
                     prefix='R$'
                     :rules="rules.valor"
-                    label="Valor de Compra"
+                    label="Valor de Venda"
                     type='number'
                   ></v-text-field>
                 </v-col>
@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: 'DialogEntradaProduto',
+  name: 'DialogSaidaProduto',
   props: {
     produto: {
       type: Object,
@@ -76,6 +76,7 @@ export default {
         quantidade: [
           v => !!v || 'Quantidade é obrigatório',
           v => (v && v > 0) || 'Quantidade deve ser positiva',
+          v => (v && v < this.produto.quantidadeEstoque) || 'Quantidade deve ser menor que a em estoque',
         ],
       }
     }
@@ -88,7 +89,7 @@ export default {
           valor: this.valor,
           quantidade: this.quantidade,
           tipoMovimentacao: {
-            codigo: 1
+            codigo: 2
           }
         }).then(() => this.$emit('movimentacaoFinalizada'))
       }
@@ -103,3 +104,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+</style>

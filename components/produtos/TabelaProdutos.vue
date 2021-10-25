@@ -39,18 +39,23 @@
       @closeDialog="exibirDialogEntradaProduto = false"
       @movimentacaoFinalizada="handleMovimentacaoFinalizada"
     />
+    <DialogSaidaProduto
+      v-if='exibirDialogSaidaProduto'
+      :exibir='exibirDialogSaidaProduto'
+      :produto='produtoParaMovimentar'
+      @closeDialog='exibirDialogSaidaProduto = false'
+      @movimentacaoFinalizada="handleMovimentacaoFinalizada"
+      />
   </div>
 </template>
 
 <script>
 import DialogDeleteProduto from '~/components/produtos/DialogDeleteProduto'
 import DialogEntradaProduto from '~/components/produtos/DialogEntradaProduto'
+import DialogSaidaProduto from '~/components/produtos/DialogSaidaProduto'
 export default {
   name: 'TabelaProdutos',
-  components: { DialogEntradaProduto, DialogDeleteProduto },
-  async fetch() {
-    await this.obterProdutos()
-  },
+  components: { DialogSaidaProduto, DialogEntradaProduto, DialogDeleteProduto },
   data() {
     return {
       produtos: [],
@@ -89,6 +94,9 @@ export default {
       ],
     }
   },
+  async fetch() {
+    await this.obterProdutos()
+  },
   methods: {
     registrarSaida(item) {
       this.produtoParaMovimentar = item
@@ -116,6 +124,7 @@ export default {
     handleMovimentacaoFinalizada() {
       this.produtoParaMovimentar = {}
       this.exibirDialogEntradaProduto = false
+      this.exibirDialogSaidaProduto = false
       this.obterProdutos()
     },
     async obterProdutos() {
