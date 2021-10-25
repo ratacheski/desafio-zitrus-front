@@ -103,10 +103,18 @@ export default {
     salvar() {
       if (this.novo) {
         this.$axios.$post('/produtos',this.produto).then(() => {
+          this.$notifier.showSuccess({
+            content:
+              `Produto ${this.produto.descricao} salvo com sucesso`,
+          })
           this.$router.push('/produtos')
         })
       } else {
         this.$axios.$put(`/produtos/${this.produto.codigo}`, this.produto).then(() => {
+          this.$notifier.showSuccess({
+            content:
+              `Produto ${this.produto.descricao} atualizado com sucesso`,
+          })
           this.$router.push('/produtos')
         })
       }
