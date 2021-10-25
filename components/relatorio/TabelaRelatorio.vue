@@ -1,9 +1,20 @@
 <template>
   <v-data-table :headers="headers" :items="produtos" class="elevation-1">
     <template #[`item.acoes`]="{ item }">
-      <v-icon :disabled='item.quantidadeSaida === 0' class="mr-2" color="secondary" @click="$emit('visualizar',item)">
-        mdi-eye
-      </v-icon>
+      <v-tooltip left open-delay="300">
+        <template #activator="{ on }">
+          <v-icon
+            :disabled="item.quantidadeSaida === 0"
+            class="mr-2"
+            color="secondary"
+            @click="$emit('visualizar', item)"
+            v-on="on"
+          >
+            mdi-eye
+          </v-icon>
+        </template>
+        <span>Detalhar Lucro</span>
+      </v-tooltip>
     </template>
   </v-data-table>
 </template>
@@ -14,8 +25,8 @@ export default {
   props: {
     produtos: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -43,10 +54,8 @@ export default {
         },
       ],
     }
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

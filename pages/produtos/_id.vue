@@ -1,54 +1,83 @@
 <template>
-  <v-row class='mt-6'>
-    <v-col class='text-center'>
+  <v-row class="mt-6">
+    <v-col class="text-center">
       <v-card>
-          <v-toolbar flat>
-            <v-toolbar-title>{{novo?'Novo': 'Edição de'}} Produto</v-toolbar-title>
-            <v-spacer />
-            <v-btn fab absolute top right color='info' class='mr-16' @click="$router.push('/produtos')">
-              <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
-            <v-btn fab absolute top right color='primary' @click='salvar'>
-              <v-icon>mdi-content-save</v-icon>
-            </v-btn>
-          </v-toolbar>
+        <v-toolbar flat>
+          <v-toolbar-title
+            >{{ novo ? 'Novo' : 'Edição de' }} Produto</v-toolbar-title
+          >
+          <v-spacer />
+          <v-tooltip bottom open-delay="300">
+            <template #activator="{ on }">
+              <v-btn
+                fab
+                absolute
+                top
+                right
+                color="info"
+                class="mr-16"
+                @click="$router.push('/produtos')"
+                v-on="on"
+              >
+                <v-icon>mdi-arrow-left</v-icon>
+              </v-btn>
+            </template>
+            <span>Voltar</span>
+          </v-tooltip>
+          <v-tooltip bottom open-delay="300">
+            <template #activator="{ on }">
+              <v-btn
+                fab
+                absolute
+                top
+                right
+                color="primary"
+                @click="salvar"
+                v-on="on"
+              >
+                <v-icon>mdi-content-save</v-icon>
+              </v-btn>
+            </template>
+            <span>Salvar</span>
+          </v-tooltip>
+        </v-toolbar>
         <v-card-text>
-          <v-form ref='form' v-model='valid' lazy-validation>
+          <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
-              <v-col cols='12'>
+              <v-col cols="12">
                 <v-text-field
                   v-model="produto.descricao"
                   :rules="rules.descricao"
                   label="Descrição"
                 ></v-text-field>
               </v-col>
-              <v-col cols=12>
+              <v-col cols="12">
                 <v-select
                   v-model="produto.tipo"
                   return-object
-                  item-text='descricao'
+                  item-text="descricao"
                   :items="tiposProduto"
                   :rules="rules.tipo"
                   label="Tipo"
                 ></v-select>
               </v-col>
-              <v-col cols='12' md=6>
+              <v-col cols="12" md="6">
                 <v-text-field
                   v-model.number="produto.quantidadeEstoque"
                   :rules="rules.qtdEstoque"
-                  :disabled='!novo'
+                  :disabled="!novo"
                   label="Quantidade em Estoque"
-                  type='number'
+                  type="number"
                 ></v-text-field>
               </v-col>
-              <v-col cols='12' md=6>
+              <v-col cols="12" md="6">
                 <v-text-field
                   v-model.number="produto.valorFornecedor"
-                  prefix='R$'
-                  :disabled='!novo'
+                  prefix="R$"
+                  :disabled="!novo"
                   :rules="rules.valorFornecedor"
                   label="Valor no Fornecedor"
-                  type='number'
+                  type="number"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -74,7 +103,7 @@ export default {
     return { novo, produto }
   },
   computed: {
-    ...mapGetters(['tiposProduto'])
+    ...mapGetters(['tiposProduto']),
   },
   // eslint-disable-next-line vue/order-in-components
   data() {
@@ -82,47 +111,45 @@ export default {
       valid: true,
       rules: {
         descricao: [
-          v => !!v || 'Descrição é obrigatório',
-          v => (v && v.length <= 255) || 'Descrição deve possuir menos de 255 caracteres',
+          (v) => !!v || 'Descrição é obrigatório',
+          (v) =>
+            (v && v.length <= 255) ||
+            'Descrição deve possuir menos de 255 caracteres',
         ],
-        tipo: [
-          v => !!v || 'Tipo é obrigatório'
-        ],
+        tipo: [(v) => !!v || 'Tipo é obrigatório'],
         qtdEstoque: [
-          v => !!v || 'Quantidade em Estoque é obrigatório',
-          v => (v && v > 0) || 'Quantidade deve ser positiva',
+          (v) => !!v || 'Quantidade em Estoque é obrigatório',
+          (v) => (v && v > 0) || 'Quantidade deve ser positiva',
         ],
         valorFornecedor: [
-          v => !!v || 'Valor no Fornecedor é obrigatório',
-          v => (v && v > 0) || 'Valor deve ser positivo',
-        ]
-      }
+          (v) => !!v || 'Valor no Fornecedor é obrigatório',
+          (v) => (v && v > 0) || 'Valor deve ser positivo',
+        ],
+      },
     }
   },
   methods: {
     salvar() {
       if (this.novo) {
-        this.$axios.$post('/produtos',this.produto).then(() => {
+        this.$axios.$post('/produtos', this.produto).then(() => {
           this.$notifier.showSuccess({
-            content:
-              `Produto ${this.produto.descricao} salvo com sucesso`,
+            content: `Produto ${this.produto.descricao} salvo com sucesso`,
           })
           this.$router.push('/produtos')
         })
       } else {
-        this.$axios.$put(`/produtos/${this.produto.codigo}`, this.produto).then(() => {
-          this.$notifier.showSuccess({
-            content:
-              `Produto ${this.produto.descricao} atualizado com sucesso`,
+        this.$axios
+          .$put(`/produtos/${this.produto.codigo}`, this.produto)
+          .then(() => {
+            this.$notifier.showSuccess({
+              content: `Produto ${this.produto.descricao} atualizado com sucesso`,
+            })
+            this.$router.push('/produtos')
           })
-          this.$router.push('/produtos')
-        })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

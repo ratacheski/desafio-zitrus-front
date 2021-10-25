@@ -2,9 +2,15 @@
   <v-toolbar flat extended extension-height="100">
     <v-toolbar-title>Filtro</v-toolbar-title>
     <v-spacer />
-    <v-btn fab absolute top right color="primary" @click="filtrar">
-      <v-icon>mdi-filter</v-icon>
-    </v-btn>
+    <v-tooltip bottom open-delay="300">
+      <template #activator="{ on }">
+        <v-btn fab absolute top right color="primary" @click="filtrar" v-on='on'>
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+      </template>
+      <span>Pesquisar</span>
+    </v-tooltip>
+
     <template #extension>
       <v-row class="mt-2">
         <v-col cols="12" md="6">

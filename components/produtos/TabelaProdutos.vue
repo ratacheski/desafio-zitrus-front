@@ -5,25 +5,68 @@
         <v-toolbar flat>
           <v-toolbar-title>Produtos</v-toolbar-title>
           <v-spacer />
-          <v-btn fab absolute top right color="primary" @click="criar">
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
+          <v-tooltip bottom open-delay="300">
+            <template #activator="{ on }">
+              <v-btn fab absolute top right color="primary" @click="criar" v-on='on'>
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+            <span>Cadastrar Produto</span>
+          </v-tooltip>
+
         </v-toolbar>
       </template>
       <template #[`item.valorFornecedor`]="{ item }">
         <span>{{ item.valorFornecedor | currency }}</span>
       </template>
       <template #[`item.acoes`]="{ item }">
-        <v-icon class="mr-2" color="info" @click="registrarSaida(item)">
-          mdi-package-up
-        </v-icon>
-        <v-icon class="mr-2" color="info" @click="registrarEntrada(item)">
-          mdi-package-down
-        </v-icon>
-        <v-icon class="mr-2" color="secondary" @click="editar(item)">
-          mdi-pencil
-        </v-icon>
-        <v-icon color="error" @click="excluir(item)"> mdi-delete </v-icon>
+        <v-tooltip top open-delay="300">
+          <template #activator="{ on }">
+            <v-icon
+              class="mr-2"
+              color="info"
+              @click="registrarSaida(item)"
+              v-on="on"
+            >
+              mdi-package-up
+            </v-icon>
+          </template>
+          <span>Registrar Saída</span>
+        </v-tooltip>
+        <v-tooltip top open-delay="300">
+          <template #activator="{ on }">
+            <v-icon
+              class="mr-2"
+              color="info"
+              @click="registrarEntrada(item)"
+              v-on="on"
+            >
+              mdi-package-down
+            </v-icon>
+          </template>
+          <span>Registrar Entrada</span>
+        </v-tooltip>
+        <v-tooltip top open-delay="300">
+          <template #activator="{ on }">
+            <v-icon
+              class="mr-2"
+              color="secondary"
+              @click="editar(item)"
+              v-on="on"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          <span>Editar</span>
+        </v-tooltip>
+        <v-tooltip top open-delay="300">
+          <template #activator="{ on }">
+            <v-icon color="error" @click="excluir(item)" v-on="on">
+              mdi-delete</v-icon
+            >
+          </template>
+          <span>Remover</span>
+        </v-tooltip>
       </template>
     </v-data-table>
     <DialogDeleteProduto
@@ -33,19 +76,19 @@
       @produtoExcluido="handleProdutoExcluido"
     />
     <DialogEntradaProduto
-      v-if='exibirDialogEntradaProduto'
+      v-if="exibirDialogEntradaProduto"
       :exibir="exibirDialogEntradaProduto"
       :produto="produtoParaMovimentar"
       @closeDialog="exibirDialogEntradaProduto = false"
       @movimentacaoFinalizada="handleMovimentacaoFinalizada"
     />
     <DialogSaidaProduto
-      v-if='exibirDialogSaidaProduto'
-      :exibir='exibirDialogSaidaProduto'
-      :produto='produtoParaMovimentar'
-      @closeDialog='exibirDialogSaidaProduto = false'
+      v-if="exibirDialogSaidaProduto"
+      :exibir="exibirDialogSaidaProduto"
+      :produto="produtoParaMovimentar"
+      @closeDialog="exibirDialogSaidaProduto = false"
       @movimentacaoFinalizada="handleMovimentacaoFinalizada"
-      />
+    />
   </div>
 </template>
 
@@ -53,6 +96,7 @@
 import DialogDeleteProduto from '~/components/produtos/DialogDeleteProduto'
 import DialogEntradaProduto from '~/components/produtos/DialogEntradaProduto'
 import DialogSaidaProduto from '~/components/produtos/DialogSaidaProduto'
+
 export default {
   name: 'TabelaProdutos',
   components: { DialogSaidaProduto, DialogEntradaProduto, DialogDeleteProduto },
