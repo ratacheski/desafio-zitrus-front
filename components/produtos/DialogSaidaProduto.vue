@@ -71,7 +71,7 @@ export default {
       rules: {
         valor: [
           v => !!v || 'Valor é obrigatório',
-          v => (v && v > 0) || 'Valor deve ser positivo',
+          v => (v && v > this.produto.valorFornecedor) || 'Valor deve ser maior que o valor de compra atual',
         ],
         quantidade: [
           v => !!v || 'Quantidade é obrigatório',
