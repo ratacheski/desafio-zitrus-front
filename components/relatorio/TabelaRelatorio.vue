@@ -1,7 +1,7 @@
 <template>
   <v-data-table :headers="headers" :items="produtos" class="elevation-1">
     <template #[`item.acoes`]="{ item }">
-      <v-icon :disabled='item.quantidadeSaida === 0' class="mr-2" color="secondary" @click="$emit('visualizar',item.codigo)">
+      <v-icon :disabled='item.quantidadeSaida === 0' class="mr-2" color="secondary" @click="$emit('visualizar',item)">
         mdi-eye
       </v-icon>
     </template>
